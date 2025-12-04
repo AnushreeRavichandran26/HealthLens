@@ -97,7 +97,7 @@ brew install tesseract
 sudo apt-get install tesseract-ocr
 ```
 
-### 6️⃣ (Optional) Download datasets & train ML models
+### 6️⃣ Download datasets & train ML models
 
 ```sh
 python src/download_datasets.py --all
@@ -134,7 +134,7 @@ RandomForestClassifier + StandardScaler + Joblib
 
 ## 📸 Screenshots
 
-![HealthLens HomePage](visuals/Home_page.png)
+![HealthLens HomePage](output-screenshots/ai-recommendations.png)
 *Dashboard showing Health Lens Home Page*
 
 ![HealthLens Dashboard](visuals/dashboard_preview.png)
