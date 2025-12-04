@@ -155,29 +155,4 @@ Always consult with qualified healthcare professionals for medical decisions. Th
 
 ---
 
-## 👨‍💻 Author
 
-**Anushree Ravichandran**
-
-- GitHub: [@AnushreeRavichandran26](https://github.com/AnushreeRavichandran26)
-- LinkedIn: [Your LinkedIn Profile](https://linkedin.com/in/yourprofile)
-
----
-
-## 🙏 Acknowledgments
-
-- [Kaggle](https://kaggle.com) for medical datasets
-- [Google Gemini](https://ai.google.dev) for AI recommendations
-- [Streamlit](https://streamlit.io) for the amazing web framework
-- Open-source ML community
-
----
-
-## 📞 Support
-
-If you encounter any issues or have questions:
-
-- Open an [Issue](https://github.com/AnushreeRavichandran26/HealthLens/issues)
-- Star ⭐ this repository if you find it helpful!
-
----
