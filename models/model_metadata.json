@@ -1,0 +1,46 @@
+{
+  "condition_features": {
+    "anemia": [
+      "Hemoglobin",
+      "MCH",
+      "MCHC",
+      "MCV",
+      "RBC",
+      "WBC"
+    ],
+    "diabetes": [
+      "Glucose",
+      "BMI",
+      "Age",
+      "BloodPressure"
+    ],
+    "cholesterol": [
+      "chol",
+      "thalach",
+      "age",
+      "trestbps"
+    ]
+  },
+  "feature_importances": {
+    "anemia": {
+      "Hemoglobin": 0.63723902793255,
+      "MCH": 0.08208167161124781,
+      "MCHC": 0.027810848010392353,
+      "MCV": 0.04515479377479093,
+      "RBC": 0.20109352641614758,
+      "WBC": 0.0066201322548713444
+    },
+    "diabetes": {
+      "Glucose": 0.46114459551311565,
+      "BMI": 0.25550485574585413,
+      "Age": 0.1852344861574738,
+      "BloodPressure": 0.09811606258355651
+    },
+    "cholesterol": {
+      "chol": 0.938944947937168,
+      "thalach": 0.025945078524911944,
+      "age": 0.024353092926915086,
+      "trestbps": 0.0107568806110051
+    }
+  }
+}
