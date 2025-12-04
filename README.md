@@ -134,13 +134,15 @@ RandomForestClassifier + StandardScaler + Joblib
 
 ## 📸 Screenshots
 
-![HealthLens HomePage](output-screenshots/ai-recommendations.png)
+![HealthLens HomePage](output-screenshots/home-dashBoard.png)
 *Dashboard showing Health Lens Home Page*
 
-![HealthLens Dashboard](visuals/dashboard_preview.png)
+![HealthLens Inout](output-screenshots/input.png)
+
+![HealthLens Dashboard](output-screenshots/analysis-result.png)
 *Dashboard showing health analysis results*
 
-![Diet Recommendations](visuals/diet_plan.png)
+![Diet Recommendations](output-screenshots/ai-recommendations.png)
 *AI-generated personalized diet plan*
 
 ---
