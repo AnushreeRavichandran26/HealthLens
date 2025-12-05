@@ -387,6 +387,40 @@ class HealthConditionClassifier:
 
         print("\n🚀 All models loaded successfully!")
 
+    def predict_conditions(self, test_results):
+        """
+        Predict all conditions from manually entered values (Streamlit input)
+        """
+        predictions = {}
+
+        for condition, features in self.condition_features.items():
+            if condition not in self.models:
+                continue
+
+            # extract values in correct order
+            input_values = []
+            for f in features:
+                val = test_results.get(f.lower(), test_results.get(f, None))
+                if val is None:
+                    val = 0
+                input_values.append(val)
+
+            input_array = np.array(input_values).reshape(1, -1)
+
+            scaler = self.scalers.get(condition)
+            model = self.models.get(condition)
+
+            if scaler and model:
+                scaled = scaler.transform(input_array)
+                proba = model.predict_proba(scaled)[0][1]
+                pred = proba > 0.5
+                
+                predictions[condition] = {
+                    "prediction": bool(pred),
+                    "probability": float(proba)
+                }
+
+        return predictions
 
 
 
