@@ -348,83 +348,44 @@ class HealthConditionClassifier:
             json.dump(metadata, f, indent=2)
         print("✅ All models and metadata saved!")
 
-    def load_models(self, path="models/"):
-        """Load all pre-trained models and scalers"""
-        import os
+    def load_models(self, path=None):
+    """Load all pre-trained models and scalers (Streamlit-safe path resolution)"""
+    import os
 
-        base_path = os.path.join(os.getcwd(), path)
-        print(f"\n📂 Loading models from: {base_path}")
+    # If path is not given, automatically locate the /models folder
+    if path is None:
+        current_dir = os.path.dirname(os.path.abspath(__file__))   # .../src
+        path = os.path.abspath(os.path.join(current_dir, "..", "models"))  # go up → /models
 
-        if not os.path.exists(base_path):
-            raise FileNotFoundError("Models directory not found!")
+    print(f"\n📂 Loading models from: {path}")
 
-        for condition in ["anemia", "diabetes", "cholesterol"]:
-            model_path = os.path.join(base_path, f"{condition}_rf_model.pkl")
-            scaler_path = os.path.join(base_path, f"{condition}_scaler.pkl")
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"Models directory not found at: {path}")
 
-            if os.path.exists(model_path) and os.path.exists(scaler_path):
-                self.models[condition] = joblib.load(model_path)
-                self.scalers[condition] = joblib.load(scaler_path)
-                print(f"✅ Loaded {condition} model and scaler")
-            else:
-                print(f"⚠️ Missing files for {condition}")
+    for condition in ["anemia", "diabetes", "cholesterol"]:
+        model_path = os.path.join(path, f"{condition}_rf_model.pkl")
+        scaler_path = os.path.join(path, f"{condition}_scaler.pkl")
 
-        metadata_path = os.path.join(base_path, "model_metadata.json")
-        if os.path.exists(metadata_path):
-            with open(metadata_path, "r") as f:
-                metadata = json.load(f)
-            self.condition_features = metadata.get("condition_features", self.condition_features)
-            self.feature_importances = metadata.get("feature_importances", {})
-            print("✅ Loaded model metadata")
+        if os.path.exists(model_path) and os.path.exists(scaler_path):
+            self.models[condition] = joblib.load(model_path)
+            self.scalers[condition] = joblib.load(scaler_path)
+            print(f"✅ Loaded {condition} model & scaler")
+        else:
+            print(f"⚠️ Missing model or scaler for {condition}")
 
-        if len(self.models) == 0:
-            raise FileNotFoundError("No trained models found in 'models/'")
+    metadata_path = os.path.join(path, "model_metadata.json")
+    if os.path.exists(metadata_path):
+        with open(metadata_path, "r") as f:
+            metadata = json.load(f)
+        self.condition_features = metadata.get("condition_features", self.condition_features)
+        self.feature_importances = metadata.get("feature_importances", {})
+        print("✅ Loaded feature metadata")
 
-        print("\n✅ All pre-trained models loaded successfully!")
+    if len(self.models) == 0:
+        raise FileNotFoundError("❌ No trained models found. Ensure .pkl files exist in /models folder")
 
-    def predict_conditions(self, test_results):
-        """
-        Predicts health conditions based on input test results.
-        Accepts a dictionary of lab values and returns predictions for each condition.
-        """
-        if not self.models:
-            raise RuntimeError("Models not loaded. Please call load_models() first.")
+    print("\n🚀 All models loaded successfully!")
 
-        predictions = {}
-
-        for condition, model in self.models.items():
-            features = self.condition_features.get(condition, [])
-            if not features:
-                print(f"⚠️ No features defined for {condition}. Skipping.")
-                continue
-
-            # Collect input values for each feature
-            try:
-                input_data = np.array([[float(test_results.get(f.lower(), test_results.get(f, 0))) for f in features]])
-            except Exception as e:
-                print(f"⚠️ Error preparing features for {condition}: {e}")
-                continue
-
-            # Scale the input
-            scaler = self.scalers.get(condition)
-            if not scaler:
-                print(f"⚠️ Missing scaler for {condition}")
-                continue
-
-            input_scaled = scaler.transform(input_data)
-
-            # Make prediction
-            prob = model.predict_proba(input_scaled)[0, 1]
-            pred = int(prob >= 0.5)
-
-            predictions[condition] = {
-                "prediction": pred,
-                "probability": prob
-            }
-
-            print(f"🩺 {condition.upper()} → {'Detected' if pred else 'Normal'} ({prob:.2%})")
-
-        return predictions
 
 
 
