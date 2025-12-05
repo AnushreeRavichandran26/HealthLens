@@ -4,6 +4,13 @@ HealthLens is an AI healthcare assistant that analyzes blood test reports, detec
 
 ---
 
+## 🌐 Live Demo
+
+🚀 **Try the deployed app here:**  
+🔗 [https://anushreeravichandran26-healthlens-app-xr0xsm.streamlit.app](https://anushreeravichandran26-healthlens-app-xr0xsm.streamlit.app/)
+
+---
+
 ## 🚀 Features
 
 - 🧾 Upload PDF / Image lab reports
