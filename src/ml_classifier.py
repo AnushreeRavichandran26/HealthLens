@@ -349,42 +349,42 @@ class HealthConditionClassifier:
         print("✅ All models and metadata saved!")
 
     def load_models(self, path=None):
-    """Load all pre-trained models and scalers (Streamlit-safe path resolution)"""
-    import os
+        """Load all pre-trained models and scalers (Streamlit-safe path resolution)"""
+        import os
 
-    # If path is not given, automatically locate the /models folder
-    if path is None:
-        current_dir = os.path.dirname(os.path.abspath(__file__))   # .../src
-        path = os.path.abspath(os.path.join(current_dir, "..", "models"))  # go up → /models
+        # If path is not given, automatically locate the /models folder
+        if path is None:
+            current_dir = os.path.dirname(os.path.abspath(__file__))  # .../src
+            path = os.path.abspath(os.path.join(current_dir, "..", "models"))  # up → /models
 
-    print(f"\n📂 Loading models from: {path}")
+        print(f"\n📂 Loading models from: {path}")
 
-    if not os.path.exists(path):
-        raise FileNotFoundError(f"Models directory not found at: {path}")
+        if not os.path.exists(path):
+            raise FileNotFoundError(f"Models directory not found at: {path}")
 
-    for condition in ["anemia", "diabetes", "cholesterol"]:
-        model_path = os.path.join(path, f"{condition}_rf_model.pkl")
-        scaler_path = os.path.join(path, f"{condition}_scaler.pkl")
+        for condition in ["anemia", "diabetes", "cholesterol"]:
+            model_path = os.path.join(path, f"{condition}_rf_model.pkl")
+            scaler_path = os.path.join(path, f"{condition}_scaler.pkl")
 
-        if os.path.exists(model_path) and os.path.exists(scaler_path):
-            self.models[condition] = joblib.load(model_path)
-            self.scalers[condition] = joblib.load(scaler_path)
-            print(f"✅ Loaded {condition} model & scaler")
-        else:
-            print(f"⚠️ Missing model or scaler for {condition}")
+            if os.path.exists(model_path) and os.path.exists(scaler_path):
+                self.models[condition] = joblib.load(model_path)
+                self.scalers[condition] = joblib.load(scaler_path)
+                print(f"✅ Loaded {condition} model & scaler")
+            else:
+                print(f"⚠️ Missing model or scaler for {condition}")
 
-    metadata_path = os.path.join(path, "model_metadata.json")
-    if os.path.exists(metadata_path):
-        with open(metadata_path, "r") as f:
-            metadata = json.load(f)
-        self.condition_features = metadata.get("condition_features", self.condition_features)
-        self.feature_importances = metadata.get("feature_importances", {})
-        print("✅ Loaded feature metadata")
+        metadata_path = os.path.join(path, "model_metadata.json")
+        if os.path.exists(metadata_path):
+            with open(metadata_path, "r") as f:
+                metadata = json.load(f)
+            self.condition_features = metadata.get("condition_features", self.condition_features)
+            self.feature_importances = metadata.get("feature_importances", {})
+            print("✅ Loaded feature metadata")
 
-    if len(self.models) == 0:
-        raise FileNotFoundError("❌ No trained models found. Ensure .pkl files exist in /models folder")
+        if len(self.models) == 0:
+            raise FileNotFoundError("❌ No trained models found. Ensure .pkl files exist in /models folder")
 
-    print("\n🚀 All models loaded successfully!")
+        print("\n🚀 All models loaded successfully!")
 
 
 
