@@ -351,6 +351,7 @@ class HealthConditionClassifier:
     def load_models(self, path=None):
         """Load all pre-trained models and scalers (Streamlit-safe path resolution)"""
         import os
+        from sklearn.metrics import roc_curve
 
         # If path is not given, automatically locate the /models folder
         if path is None:
